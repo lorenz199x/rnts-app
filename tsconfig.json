@@ -1,3 +1,22 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@mocks/*": ["./__mocks__/*"],
+      "@tests/*": ["./__tests__/*"],
+      "@temps/*": ["./__temps__/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@components/*": ["./src/components/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@navigation/*": ["./src/navigation/*"],
+      "@redux/*": ["./src/redux/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@themes/*": ["./src/themes/*"]
+    }
+  }
 }

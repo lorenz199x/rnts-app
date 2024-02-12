@@ -1,4 +1,5 @@
 # rnts-app
+
 # Getting Started
 
 > **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
@@ -182,6 +183,12 @@ module.exports = {
     ],
   ],
 };
+```
+
+4. Install 'metro-react-native-babel-preset' and 'react-native-reanimated' by running this
+
+```package.json
+yarn add -D metro-react-native-babel-preset && yarn add react-native-reanimated
 ```
 
 ## Step 5: Start the Metro Server
