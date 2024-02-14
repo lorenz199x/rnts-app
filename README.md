@@ -302,7 +302,7 @@ const Utils = {
 export default Utils;
 ```
 
-7. This is pptional, create d.ts file and add this
+7. This is optional, create d.ts file and add this
 
 ```bash
 declare module 'lodash/isEmpty';
