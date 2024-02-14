@@ -228,3 +228,84 @@ npm run ios
 # OR using Yarn
 yarn ios
 ```
+
+# Integrate Reactoron for log monitoring
+
+## Step 1: Setup Reactotron
+
+1. Install @react-native-async-storage/async-storage from https://www.npmjs.com/package/@react-native-async-storage/async-storage `yarn add @react-native-async-storage/async-storage`
+2. Install lodash `yarn add lodash`
+3. Install reactotron-react-native from https://github.com/infinitered/reactotron `yarn add reactotron-react-native -D`
+4. Create a file in your root folder reactotron-config.ts
+
+```bash
+import Reactotron from 'reactotron-react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const appName = require('./app.json').name;
+
+// Initialize Reactotron
+const reactotron = Reactotron.configure({
+  name: appName,
+})
+  .useReactNative({
+    asyncStorage: false,
+    networking: {
+      ignoreUrls: /symbolicate/,
+    },
+    editor: false,
+    errors: {},
+    overlay: false,
+  });
+// Check if setAsyncStorageHandler exists before calling it
+if (reactotron.setAsyncStorageHandler) {
+  reactotron.setAsyncStorageHandler(AsyncStorage);
+}
+
+// Finally, connect Reactotron
+reactotron.connect();
+
+export default Reactotron;
+
+```
+
+5. Add Reactotron to your app
+
+```bash
+// Initialize Reactotron
+if (__DEV__) {
+  import('./reactotron-config').then(() => Utils.logger('Reactotron Configured'));
+}
+```
+
+6. You should create a utils folder and create file for index.ts and logger.ts. eg: src/utils
+
+```bash
+// logger.ts
+import Reactotron from 'reactotron-react-native';
+import isEmpty from 'lodash/isEmpty';
+
+export default (...args: any[]) => {
+  if (!isEmpty(args) && Reactotron.log) {
+    Reactotron.log(args);
+    console.log(args);
+  }
+};
+
+// index.ts
+import logger from './logger';
+
+const Utils = {
+  logger,
+};
+
+export default Utils;
+```
+
+7. This is optional, create d.ts file and add this
+
+```bash
+declare module 'lodash/isEmpty';
+```
+
+8. Try to add logger in your app and run.
