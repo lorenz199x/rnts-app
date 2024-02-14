@@ -1,17 +1,9 @@
-/**
- * @format
- */
+import { expect, test } from '@jest/globals';
 
-import 'react-native';
-import React from 'react';
-import App from '../App';
+function sum(num1: number, num2: number) {
+  return num1 + num2;
+}
 
-// Note: import explicitly to use the types shipped with jest.
-import {it} from '@jest/globals';
-
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
-
-it('renders correctly', () => {
-  renderer.create(<App />);
+test('adds 2 number', () => {
+  expect(sum(1, 2)).toBe(3);
 });

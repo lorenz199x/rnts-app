@@ -11,6 +11,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.21.0",
+    "lodash": "^4.17.21",
     "react": "18.2.0",
     "react-native": "0.73.4",
     "react-native-reanimated": "^3.7.0"
@@ -38,6 +40,7 @@
     "metro-react-native-babel-preset": "^0.77.0",
     "prettier": "2.8.8",
     "react-test-renderer": "18.2.0",
+    "reactotron-react-native": "^5.1.0",
     "typescript": "^5.3.3"
   },
   "engines": {
