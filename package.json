@@ -8,7 +8,9 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint:fix": "eslint ./src --fix",
+    "lint:fix-ff": "npx eslint . --fix"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.21.0",
