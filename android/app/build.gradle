@@ -2,6 +2,14 @@ apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
+/* this is setup for multiple env */
+project.ext.envConfigFiles = [
+    dev: ".env.dev",
+    qa: ".env.qa",
+    staging: ".env.staging",
+    prod: ".env.production"
+]
+apply from: project(':react-native-config').projectDir.getPath() + '/dotenv.gradle'
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -81,6 +89,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        resValue 'string', 'build_config_package','com.rnts' /** add this for multiple env setup */
+
     }
     signingConfigs {
         debug {
@@ -102,6 +112,39 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    /** add this for multiple env setup */
+    flavorDimensions "env"
+    productFlavors {
+        dev {
+            dimension 'env'
+            applicationIdSuffix ".dev"
+            applicationId 'com.vppi_initialcare.dev'
+            versionCode 1
+            versionName "1.0.0"
+        }
+        qa {
+            dimension 'env'
+            applicationIdSuffix ".qa"
+            applicationId 'com.vppi_initialcare.qa'
+            versionCode 1
+            versionName "1.0.0"
+        }
+        staging {
+            dimension 'env'
+            applicationIdSuffix ".staging"
+            applicationId 'com.vppi_initialcare.staging'
+            versionCode 1
+            versionName "1.0.0"
+        }
+        prod {
+            dimension 'env'
+            applicationIdSuffix ""
+            applicationId 'com.vppi_initialcare'
+            versionCode 1
+            versionName "1.0.0"
+        }
+    }
+    
 }
 
 dependencies {
