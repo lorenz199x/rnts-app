@@ -28,7 +28,8 @@ end
 target 'rnts' do
   config = use_native_modules!
   pod 'react-native-config/Extension', :path => '../node_modules/react-native-config'
-
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  
   use_react_native!(
     :path => config[:reactNativePath],
     # Enables Flipper.

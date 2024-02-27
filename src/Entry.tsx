@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Config from 'react-native-config';
+import Icon from '@components/Icon/Icon';
 import logger from '@utils/logger';
 
 const Entry = () => {
@@ -12,6 +13,7 @@ const Entry = () => {
   return (
     <View style={styles.container}>
       <Text>Entry: {Config.NODE_ENV}</Text>
+      <Icon type={'MaterialCommunity'} icon={'arrow-left'} size={34} color={'red'} />
     </View>
   );
 };
