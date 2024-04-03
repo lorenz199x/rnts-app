@@ -1,4 +1,4 @@
-package com.rnts
+package com.lo.yaverse
 
 import android.app.Application
 import com.facebook.react.PackageList
