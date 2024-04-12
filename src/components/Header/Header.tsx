@@ -7,13 +7,19 @@ import Navigation from '@navigation/Navigation';
 interface HeaderProps {
   searchKey: string;
   setSearchKey: any;
+  clearSearchKey: () => void;
 }
 const Header: React.FC<HeaderProps> = (props) => {
-  const { searchKey, setSearchKey } = props;
-  console.log(searchKey, setSearchKey);
+  const { searchKey, setSearchKey, clearSearchKey } = props;
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => Navigation.goBack()} style={styles.button}>
+      <TouchableOpacity
+        onPress={() => {
+          clearSearchKey();
+          Navigation.goBack();
+        }}
+        style={styles.button}
+      >
         <Icon type={'Feather'} icon={'arrow-left'} size={25} color={'black'} />
       </TouchableOpacity>
       <SearchBar value={searchKey} onChangeText={setSearchKey} />

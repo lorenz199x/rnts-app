@@ -79,6 +79,9 @@ const AppNavigator = () => {
   };
 
   const [searchKey, setSearchKey] = useState('');
+  const clearSearchKey = () => {
+    setSearchKey('');
+  };
 
   return (
     <NavigationContainer
@@ -103,11 +106,17 @@ const AppNavigator = () => {
         <RootStack.Screen
           name={Screen.PRODUCT_SCREEN}
           component={ProductListScreen}
-          options={{
-            header: () => (
-              <Header searchKey={searchKey} setSearchKey={(text: string) => setSearchKey(text)} />
+          options={() => ({
+            header: (props) => (
+              <Header
+                searchKey={searchKey}
+                setSearchKey={(text: string) => setSearchKey(text)}
+                {...props}
+                clearSearchKey={() => clearSearchKey()}
+              />
             ),
-          }}
+          })}
+          initialParams={{ searchKey }}
         />
       </RootStack.Navigator>
       {/* <TabBar /> */}

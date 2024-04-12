@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import Pagination from '@components/Pagination/Pagination';
 import { products } from '@mocks/mock_products';
@@ -11,12 +11,28 @@ interface Product {
   image: string; // Image URL
 }
 
-const ProductListScreen: React.FC = () => {
-  // const [searchKey, setSearchKey] = useState('');
+interface ProductListProps {
+  route: any;
+}
+
+const ProductListScreen: React.FC<ProductListProps> = (props) => {
+  const { route } = props;
+  const { searchKey } = route.params;
+  console.log(searchKey);
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Number of items per page
   const totalPages = Math.ceil(products.length / itemsPerPage);
+
+  // Filter products based on searchKey
+  const filteredProducts = useMemo(() => {
+    if (!searchKey) {
+      return products;
+    }
+    return products.filter((product) =>
+      product.name.toLowerCase().includes(searchKey.toLowerCase())
+    );
+  }, [searchKey]);
 
   // Function to handle pagination - Go to specific page
   const goToPage = (page: number) => {
@@ -29,11 +45,7 @@ const ProductListScreen: React.FC = () => {
   const renderItem = ({ item }: { item: Product }) => (
     <View style={styles.itemContainer}>
       {/* Left side: Image */}
-      <Image
-        source={{ uri: item.image }} // Use item.image as the image source
-        style={styles.itemImage}
-        resizeMode="cover"
-      />
+      <Image source={{ uri: item.image }} style={styles.itemImage} resizeMode="cover" />
       {/* Middle: Item details */}
       <View style={styles.itemDetails}>
         <Text style={styles.itemName}>{item.name}</Text>
@@ -46,18 +58,8 @@ const ProductListScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.header}>
-        <TouchableOpacity onPress={() => Navigation.goBack()} style={styles.backButton}>
-          <Icon type={'Feather'} icon={'arrow-left'} size={25} color={'black'} />
-        </TouchableOpacity>
-        <SearchBar
-          value={searchKey}
-          onChangeText={(text: string) => setSearchKey(text)}
-          searchStyle={styles.searchBar}
-        />
-      </View> */}
       <FlatList
-        data={products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)}
+        data={filteredProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />
@@ -66,6 +68,8 @@ const ProductListScreen: React.FC = () => {
     </View>
   );
 };
+
+export default ProductListScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -120,5 +124,3 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-
-export default ProductListScreen;

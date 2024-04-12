@@ -30,7 +30,6 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
   const { value, onChangeText } = props;
 
   const handleSearch = () => {
-    console.log('Search', value);
     Navigation.navigate(Screen.PRODUCT_SCREEN, { value });
   };
 
