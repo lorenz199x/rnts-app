@@ -1,54 +1,60 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Icon from '@components/Icon/Icon';
+import { Label } from '@shared/enums/labels';
 
 const SettingsScreen: React.FC = () => {
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
+  const [showError, setShowError] = useState(false);
 
   // Function to handle input change
   const handleInputChange = (text: string) => {
-    // Validate input
-    if (text.trim() === '') {
-      setError('Value cannot be blank');
-    } else if (!/^\d+$/.test(text)) {
-      setError('Value must be a valid positive number');
-    } else if (parseInt(text) > 100) {
-      setError('Value cannot exceed 100');
-    } else {
-      setError('');
-    }
     // Update input value
     setValue(text);
   };
 
   // Function to handle save button press
   const handleSave = () => {
-    // Perform action on save, e.g., save to settings
-    console.log('Saved value:', value);
+    // Validate input
+    if (value.trim() === '') {
+      setError('Value cannot be blank');
+    } else if (!/^\d+$/.test(value)) {
+      setError('Value must be a valid positive number');
+    } else if (parseInt(value) > 100) {
+      setError('Value cannot exceed 100');
+    } else {
+      setError('');
+      Alert.alert('Success', 'Value is correct', [{ text: 'OK' }]);
+    }
+    setShowError(true);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
+      <Text style={styles.title}>{Label.SETTINGS}</Text>
       <TextInput
-        style={[styles.input, error ? styles.inputError : null]}
+        style={[styles.input, error && showError ? styles.inputError : null]}
         placeholder="Enter value"
         keyboardType="numeric"
         value={value}
         onChangeText={handleInputChange}
       />
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-      <TouchableOpacity style={styles.saveButton} onPress={handleSave} disabled={!!error}>
+      {error && showError ? <Text style={styles.error}>{error}</Text> : null}
+      <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+        <Icon type={'Feather'} icon={'save'} size={24} color={'#fff'} />
         <Text style={styles.saveButtonText}>Save</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
+export default SettingsScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f0f0f0',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
@@ -57,6 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#333',
   },
   input: {
     width: '100%',
@@ -66,6 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
+    backgroundColor: '#fff',
   },
   inputError: {
     borderColor: 'red',
@@ -75,6 +83,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   saveButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: 'blue',
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -83,7 +93,6 @@ const styles = StyleSheet.create({
   saveButtonText: {
     color: '#fff',
     fontSize: 16,
+    marginLeft: 5,
   },
 });
-
-export default SettingsScreen;

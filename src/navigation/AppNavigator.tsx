@@ -64,6 +64,10 @@ const TabBar = () => {
 };
 const AppNavigator = () => {
   const routeNameRef = useRef();
+  const [searchKey, setSearchKey] = useState('');
+  const clearSearchKey = () => {
+    setSearchKey('');
+  };
 
   const rootScreenOption = {
     animationEnabled: true,
@@ -78,11 +82,6 @@ const AppNavigator = () => {
     routeNameRef.current = navigationRef.getCurrentRoute().name;
   };
 
-  const [searchKey, setSearchKey] = useState('');
-  const clearSearchKey = () => {
-    setSearchKey('');
-  };
-
   return (
     <NavigationContainer
       ref={(navigatorRef: any) => Navigation.setTopLevelNavigator(navigatorRef)}
@@ -95,11 +94,7 @@ const AppNavigator = () => {
           component={TabBar}
           options={{
             header: () => (
-              <SearchBar
-                // searchStyle={styles.searchStyle}
-                value={searchKey}
-                onChangeText={(text: string) => setSearchKey(text)}
-              />
+              <SearchBar value={searchKey} onChangeText={(text: string) => setSearchKey(text)} />
             ),
           }}
         />

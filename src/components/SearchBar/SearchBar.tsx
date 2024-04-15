@@ -5,24 +5,9 @@ import Navigation from '@navigation/Navigation';
 import { Screen } from '@shared/enums/screen';
 
 interface SearchBarProps {
-  /**
-   * indicates if searchbar will transfer to search screen
-   */
   isTouchableRespond?: boolean;
-
-  /**
-   * Custom style in appHeader(optional)
-   */
   searchStyle?: StyleProp<ViewStyle>;
-
-  /**
-   * Value of input
-   */
   value?: string;
-
-  /**
-   * Function that changes value
-   */
   onChangeText?: any;
 }
 
@@ -35,15 +20,17 @@ const SearchBar: React.FC<SearchBarProps> = (props) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Search..."
-        onChangeText={onChangeText}
-        value={value}
-      />
-      <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
-        <Icon type={'Feather'} icon={'search'} size={30} color={'black'} />
-      </TouchableOpacity>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Search..."
+          onChangeText={onChangeText}
+          value={value}
+        />
+        <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
+          <Icon type={'Feather'} icon={'search'} size={24} color={'#777'} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -52,24 +39,27 @@ export default SearchBar;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    // paddingHorizontal: 30,
-    paddingRight: 40,
-    paddingLeft: 10,
-    paddingVertical: 5,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: '#E0E0E0',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 8,
+    backgroundColor: '#F5F5F5',
+    overflow: 'hidden',
   },
   input: {
     flex: 1,
-    paddingHorizontal: 10,
-    height: 40,
-    borderRadius: 5,
-    backgroundColor: '#f0f0f0',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: '#333',
   },
   searchButton: {
-    marginLeft: 10,
+    padding: 12,
   },
 });

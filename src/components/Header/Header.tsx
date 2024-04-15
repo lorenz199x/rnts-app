@@ -9,8 +9,10 @@ interface HeaderProps {
   setSearchKey: any;
   clearSearchKey: () => void;
 }
+
 const Header: React.FC<HeaderProps> = (props) => {
   const { searchKey, setSearchKey, clearSearchKey } = props;
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -18,11 +20,13 @@ const Header: React.FC<HeaderProps> = (props) => {
           clearSearchKey();
           Navigation.goBack();
         }}
-        style={styles.button}
+        style={styles.backButton}
       >
-        <Icon type={'Feather'} icon={'arrow-left'} size={25} color={'black'} />
+        <Icon type={'Feather'} icon={'arrow-left'} size={24} color={'#555'} />
       </TouchableOpacity>
-      <SearchBar value={searchKey} onChangeText={setSearchKey} />
+      <View style={styles.searchContainer}>
+        <SearchBar value={searchKey} onChangeText={setSearchKey} />
+      </View>
     </View>
   );
 };
@@ -33,10 +37,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
-    marginTop: 10,
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
   },
-  button: {
-    marginLeft: 10,
+  backButton: {
+    marginRight: 16,
+  },
+  searchContainer: {
+    flex: 1,
   },
 });

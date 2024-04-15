@@ -2,8 +2,17 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface PaginationProps {
+  /**
+   * The current page number
+   */
   currentPage: number;
+  /**
+   * The total page length
+   */
   totalPages: number;
+  /**
+   * The page func.
+   */
   onPageChange: (page: number) => void;
 }
 
@@ -26,7 +35,13 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     <View style={styles.pagination}>
       {/* Previous button */}
       <TouchableOpacity onPress={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>
-        <Text style={[styles.paginationButton, currentPage === 1 && styles.disabledButton]}>
+        <Text
+          style={[
+            styles.paginationButton,
+            styles.controlButton,
+            currentPage === 1 && styles.disabledButton,
+          ]}
+        >
           {'<'}
         </Text>
       </TouchableOpacity>
@@ -44,7 +59,11 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         disabled={currentPage === totalPages}
       >
         <Text
-          style={[styles.paginationButton, currentPage === totalPages && styles.disabledButton]}
+          style={[
+            styles.paginationButton,
+            styles.controlButton,
+            currentPage === totalPages && styles.disabledButton,
+          ]}
         >
           {'>'}
         </Text>
@@ -52,6 +71,8 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     </View>
   );
 };
+
+export default Pagination;
 
 const styles = StyleSheet.create({
   pagination: {
@@ -62,15 +83,17 @@ const styles = StyleSheet.create({
   },
   paginationButton: {
     fontSize: 16,
-    color: 'blue',
+    color: '#333',
     marginHorizontal: 10,
+  },
+  controlButton: {
+    paddingHorizontal: 8,
   },
   activeButton: {
     fontWeight: 'bold',
+    color: 'blue',
   },
   disabledButton: {
     color: '#ccc',
   },
 });
-
-export default Pagination;

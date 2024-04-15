@@ -1,6 +1,8 @@
 import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { categories } from '@mocks/mock_products';
+import Navigation from '@navigation/Navigation';
+import { Screen } from '@shared/enums/screen';
 
 // Define types for category items
 interface CategoryItem {
@@ -10,13 +12,15 @@ interface CategoryItem {
 }
 
 const HomeScreen: React.FC = () => {
-  const onPressItem = (label: string) => console.log('press', label);
+  const onPressItem = (label: string) => {
+    Navigation.navigate(Screen.PRODUCT_SCREEN, { category: label });
+    console.log('press', label);
+  };
 
-  // Inside your component...
   const renderCategoryItem = ({ item }: { item: CategoryItem }) => (
-    <TouchableOpacity style={styles.button} onPress={() => onPressItem(item.label)}>
+    <TouchableOpacity style={styles.categoryContainer} onPress={() => onPressItem(item.label)}>
       <Image source={{ uri: item.image }} style={styles.categoryImage} />
-      <Text style={styles.buttonText}>{item.label}</Text>
+      <Text style={styles.categoryLabel}>{item.label}</Text>
     </TouchableOpacity>
   );
 
@@ -33,36 +37,39 @@ const HomeScreen: React.FC = () => {
   );
 };
 
+export default HomeScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#F4F4F4',
+    paddingHorizontal: 16,
+    paddingTop: 32,
   },
   gridContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingBottom: 16,
   },
-  button: {
-    width: 100,
-    height: 150, // Adjusted height to accommodate image and text
-    backgroundColor: '#ccc8c8',
-    margin: 10,
-    justifyContent: 'center',
+  categoryContainer: {
+    flex: 1,
+    margin: 8,
+    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
-    borderRadius: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#fff',
-    marginTop: 5, // Added margin top to separate image and text
+    justifyContent: 'center',
+    paddingVertical: 12,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
   },
   categoryImage: {
-    width: 80, // Adjust as needed
-    height: 80, // Adjust as needed
-    marginBottom: 5, // Added margin bottom to separate image and text
+    width: 80,
+    height: 80,
+    marginBottom: 8,
+  },
+  categoryLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: '#333333',
   },
 });
-
-export default HomeScreen;
